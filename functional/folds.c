@@ -97,9 +97,9 @@ main()
     NUMTYPE* res = (NUMTYPE*)malloc(sizeof(NUMTYPE));
     *res = 1;
 
-    const NUMTYPE len = sizeof(arr)/sizeof(*arr);
+    const size_t len = sizeof(arr)/sizeof(*arr);
 
-    foldr(arr, len, sizeof(*arr), &mul_r_NUMTYPE, res);
+    foldr(arr, len, sizeof(NUMTYPE), &mul_r_NUMTYPE, res);
 
     for (int i = 0; i < len; i++)
         printf("%d ", arr[i]);
