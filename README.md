@@ -1,3 +1,1 @@
-# C-Programs
-
-simple exercise problems in C
+Simple collection of programs written in C.
