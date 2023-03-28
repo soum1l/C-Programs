@@ -3,16 +3,13 @@
 #include <string.h>
 #include <stdbool.h>
 
-//////// Tuple abstraction
-
 typedef struct Tuple {
     int key;
     int val;
 } Tuple;
 
-///// Comparator for Tuple
-
-bool less_than_tuple(const void* a, const void* b)
+bool
+less_than_tuple(const void* a, const void* b)
 {
     return ((Tuple*)(a))-> key < ((Tuple*)(b))-> key;
 }
@@ -81,15 +78,11 @@ mergeSort(  void*           arr
     size_t len_right= len - len_left;
     mergeSort(right, len_right, t_size, less_than);
 
-    /**************************/
-
     ///////////// merge segments
 
     void* res = merge(left, right, len_left, len_right, t_size, less_than);
     memcpy(arr, res, len * t_size);
     free(res);
-
-    /**************************/
 }
 
 void
@@ -98,8 +91,6 @@ radixSort(  int*            arr
         ,   size_t          digits
         ,   void            (*stable_sort)(void*, size_t, size_t, bool (*)(const void*, const void*))
 ){
-    /************************/
-
     Tuple* t_arr = calloc(len, sizeof(Tuple));
 
     //// sort using each digit
@@ -118,8 +109,6 @@ radixSort(  int*            arr
             arr[j] = t_arr[j].val;
     }
 
-    /************************/
-
     free(t_arr);
 }
 
@@ -129,7 +118,7 @@ less_than_int(const void* a, const void* b)
     return *(int*)(a) < *(int*)(b);
 }
 
-void
+int
 main()
 {
     int a[] = { 23,21,11,45,21,86,58,44,89,5 };
@@ -142,4 +131,6 @@ main()
         printf("%d ", a[i]);
 
     printf("\n");
+
+    return 0;
 }
