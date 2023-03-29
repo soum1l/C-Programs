@@ -51,7 +51,7 @@ main()
 {
     NUMTYPE arr[] = {1,2,3,4,5,6};
 
-    NUMTYPE* res = (NUMTYPE*)malloc(sizeof(NUMTYPE));
+    NUMTYPE* res = malloc(sizeof(NUMTYPE));
     *res = 1;
 
     const size_t len = sizeof(arr)/sizeof(*arr);
