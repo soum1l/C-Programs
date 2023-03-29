@@ -12,7 +12,7 @@ foldr(  const void*     arr
     ,   void*           (*combine_r)(const void*, void*)
     ,   void* const     initial
 ){
-    if (len-- > 0)
+    if (0 < len--)
         return combine_r(
                 arr
             ,   foldr(  (void*)(arr + arr_t_size)
@@ -33,7 +33,7 @@ foldl(  const void*     arr
     ,   void*           (*combine_l)(void*, const void*)
     ,   void* const     initial
 ){
-    if (len-- > 0)
+    if (0 < len--)
         return combine_l(
                 foldl(  arr
                     ,   len
