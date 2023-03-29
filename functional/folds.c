@@ -6,20 +6,20 @@
 /* FOLDS */
 
 void*
-foldr(      const void*     arr
-        ,   size_t          len
-        ,   size_t          arr_t_size
-        ,   void*           (*combine_r)(const void*, void*)
-        ,   void* const     initial
+foldr(  const void*     arr
+    ,   size_t          len
+    ,   size_t          arr_t_size
+    ,   void*           (*combine_r)(const void*, void*)
+    ,   void* const     initial
 ){
     if (len-- > 0)
         return combine_r(
                 arr
-            ,   foldr(      (void*)(arr + arr_t_size)
-                        ,   len
-                        ,   arr_t_size
-                        ,   combine_r
-                        ,   initial
+            ,   foldr(  (void*)(arr + arr_t_size)
+                    ,   len
+                    ,   arr_t_size
+                    ,   combine_r
+                    ,   initial
                 )
         );
     else
@@ -27,19 +27,19 @@ foldr(      const void*     arr
 }
 
 void*
-foldl(      const void*     arr
-        ,   size_t          len
-        ,   size_t          arr_t_size
-        ,   void*           (*combine_l)(void*, const void*)
-        ,   void* const     initial
+foldl(  const void*     arr
+    ,   size_t          len
+    ,   size_t          arr_t_size
+    ,   void*           (*combine_l)(void*, const void*)
+    ,   void* const     initial
 ){
     if (len-- > 0)
         return combine_l(
-                foldl(      arr
-                        ,   len
-                        ,   arr_t_size
-                        ,   combine_l
-                        ,   initial
+                foldl(  arr
+                    ,   len
+                    ,   arr_t_size
+                    ,   combine_l
+                    ,   initial
                 )
             ,   (void*)(arr + (arr_t_size * len))
         );
