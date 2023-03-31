@@ -9,9 +9,9 @@ typedef struct Tuple {
 } Tuple;
 
 bool
-less_than_tuple(const void* a, const void* b)
+less_than_Tuple(const void* a, const void* b)
 {
-    return ((Tuple*)(a))-> key < ((Tuple*)(b))-> key;
+    return ((Tuple*)a)-> key < ((Tuple*)b)-> key;
 }
 
 void*
@@ -29,7 +29,7 @@ merge(    const void*       a
 
     while (i < len_a && j < len_b)
     {
-        if (!(*less_than)(b, a))
+        if (!less_than(b, a))
         {
             memcpy(w, a, t_size);
             a += t_size;
@@ -88,26 +88,37 @@ mergeSort(  void*           arr
 void
 radixSort(  int*            arr
         ,   size_t          len
-        ,   size_t          digits
         ,   void            (*stable_sort)(void*, size_t, size_t, bool (*)(const void*, const void*))
 ){
     Tuple* t_arr = calloc(len, sizeof(Tuple));
 
+    size_t i;
+
+    for (i=0; i < len; i++)
+        t_arr[i].val = arr[i];
+
     //// sort using each digit
 
-    for (size_t i=1, e=1; i <= digits; i++, e*=10)
+    bool done;
+
+    for (size_t e=1;; e*=10)
     {
-        for (size_t j=0; j < len; j++)
+        done = true;
+
+        for (i=0; i < len; i++)
         {
-            t_arr[j].val = arr[j];
-            t_arr[j].key = (arr[j] % (e*10)) / e;
+            t_arr[i].key = (t_arr[i].val % (e*10)) / e;
+            done &= t_arr[i].val < e;
         }
 
-        stable_sort(t_arr, len, sizeof(Tuple), &less_than_tuple);
-
-        for (size_t j=0; j < len; j++)
-            arr[j] = t_arr[j].val;
+        if (done)
+            break;
+        else
+            stable_sort(t_arr, len, sizeof(Tuple), &less_than_Tuple);
     }
+
+    for (i=0; i < len; i++)
+        arr[i] = t_arr[i].val;
 
     free(t_arr);
 }
@@ -121,11 +132,11 @@ less_than_int(const void* a, const void* b)
 int
 main()
 {
-    int a[] = { 23,21,11,45,21,86,58,44,89,5 };
+    int a[] = { 23,21,500,1,22,21 };
 
     const size_t len_a = sizeof(a)/sizeof(int);
 
-    radixSort(a, len_a, 2, &mergeSort);
+    radixSort(a, len_a, &mergeSort);
 
     for (int i = 0; i < len_a; i++)
         printf("%d ", a[i]);
