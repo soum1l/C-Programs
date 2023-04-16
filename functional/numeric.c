@@ -52,11 +52,10 @@ main()
     NUMTYPE arr[] = {1,2,3,4,5,6};
 
     NUMTYPE* res = malloc(sizeof(NUMTYPE));
-    *res = 1;
 
     const size_t len = sizeof(arr)/sizeof(*arr);
 
-    foldr(arr, len, sizeof(NUMTYPE), &mul_r, res);
+    foldr1(arr, len, sizeof(NUMTYPE), &mul_r, res);
 
     for (int i = 0; i < len; i++)
         printf("%d ", arr[i]);
